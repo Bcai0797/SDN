@@ -27,7 +27,7 @@ color_transform = ColorJitter(0.5, 0.5, 0.5, 0.5)
 other_transform = ToTensor()
 
 dataset_train = AugDataset(dataset_dir + 'training/', train_list, spatial_transform, color_transform, other_transform, repeat=None)
-n_batch = 2
+n_batch = 8
 dataloader_train = torch.utils.data.DataLoader(dataset_train, batch_size=n_batch, num_workers=0, shuffle=True)
 n_epoch = 1000
 
@@ -107,7 +107,7 @@ for it_epoch in range(n_epoch):
             x_img = x_img.view(-1, 3, h, w)
             y_img = y_img.view(-1, 3, h, w)
 
-            x_s, x_v, x_out, y_s, y_v, y_out, x2y_out, y2x_out = model.transfer(x_img.cuda(), y_img.cuda())
+            x_s, x_v, x_out, y_s, y_v, y_out, x2y_out, y2x_out = model.transfer_full(x_img.cuda(), y_img.cuda())
             s_mse = mse(x_s, y_s)
             v_mse = mse(x_v, y_v)
             x_rec = mse(x_out, x_img)
