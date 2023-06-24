@@ -9,7 +9,7 @@ from skimage import metrics
 
 np.random.seed(0)
 
-cuda_id = 1
+cuda_id = 2
 torch.cuda.set_device(cuda_id)
 
 dataset_dir = './data/wsi/ah/'
@@ -85,7 +85,7 @@ for it_epoch in range(n_epoch):
                 trans_loss += 0.5 * (cos_dis(i2j, x_list[r_i][c_j]) + cos_dis(j2i, x_list[r_j][c_i]))
                 n_trans += 1
 
-        loss = rec_loss + trans_loss
+        loss = 100 * (rec_loss + trans_loss)
         loss.backward()
         optimizer.step()
         loss_epoch += loss
